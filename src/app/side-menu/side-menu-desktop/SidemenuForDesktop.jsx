@@ -62,8 +62,8 @@ const SidemenuForDesktop = ({setOpen}) => {
         </div>
       </div>
       <div
-        onClick={() => notify("Only Admins have Access!")}
-        className="flex flex-col justify-center items-center px-2 py-4  border-t-2 border-dotted border-black space-y-3 cursor-pointer"
+        onClick={() => notify("Only Admins have Access!!")}
+        className="flex flex-col justify-center items-center px-2 py-4  border-t-2 border-dotted border-grey space-y-3 cursor-pointer"
       >
         <span
           style={{

@@ -1,6 +1,4 @@
-
-import { Fragment, useRef, useState } from 'react'
-// import {Dialog, Transition} from "@headlessui/react";
+import {Fragment, useRef, useState} from "react";
 import {
   Dialog,
   DialogActions,
@@ -14,341 +12,207 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
-import Header from '../header/Header'
+import CloseIcon from "@mui/icons-material/Close";
+import Header from "../header/Header";
 import AssesmentDetails from "../assesment-details/AssesmentDetails";
-// import MyAssesmentPage from "../assesment/MyAssesmentPage";
-// import { Button, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { toast } from 'react-toastify'
-import MyAssessmentPage from '../assesment/MyAssesmentPage';
+import {toast} from "react-toastify";
+import MyAssessmentPage from "../assesment/MyAssesmentPage";
 
 const CreateAssesmentDialogBox = () => {
-    // state to check whether 'unstop assessment' is selected or 'my assessment'
-    const [open, setOpen] = useState(false)
-    // state to check is dialog open or not, it is a dialog to add new assessment
-    const [openDialog, setOpenDialog] = useState(false)
-    // array to store selected skills
-    const [skills, setSkills] = useState(['React', 'Next.js', 'Node', 'Express', 'MongoDb'])
-    const cancelButtonRef = useRef(null)
+  const [open, setOpen] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [skills, setSkills] = useState([
+    "Javascript",
+    "NodeJs",
+    "ReactJs",
+    "Express",
+    "MongoDb",
+  ]);
+  const cancelButtonRef = useRef(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    purpose: "",
+    questions: "",
+    duration: "",
+    date: new Date().toDateString().slice(3),
+  });
 
-    // state to store form data in an object
-    const [formData, setFormData] = useState({
-        title: '',
-        purpose: '',
-        questions: '',
-        duration: "",
-        date: new Date().toDateString().slice(3)
-    });
-    // upon changing the input data, formData object will be updated 
-    const handleChange = (e, fieldName) => {
-        const { value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [fieldName]: value,
-        }));
-    };
+  const handleChange = (e, fieldName) => {
+    const {value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  };
 
-    // adding the formData to existing or main data
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formData);
-        data.unshift(formData)
-        setOpenDialog(false)
-        toast.success('Added Successfully!')
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    data.unshift(formData);
+    setOpenDialog(false);
+    toast.success("Added Successfully!");
+  };
 
-    // func to add new skills to skills array
-    const addSkills = (e) => {
-        if (e.key === 'Shift') {
-            const newValue = e.target.value;
-            setSkills((prevValues) => [...prevValues, newValue]);
-            e.target.value = '';
-        }
-    };
-    // func to remove the added skills from an array
-    const removeSkills = (item) => {
-        const updatedSkills = skills.filter((skill) => skill !== item);
-        setSkills(updatedSkills)
+  const addSkills = (e) => {
+    if (e.key === "Shift") {
+      const newValue = e.target.value;
+      setSkills((prevValues) => [...prevValues, newValue]);
+      e.target.value = "";
     }
+  };
+  const removeSkills = (item) => {
+    const updatedSkills = skills.filter((skill) => skill !== item);
+    setSkills(updatedSkills);
+  };
 
+  return (
+    <>
+      <div className="flex flex-col justify-start items-start overflow-hidden">
+        <Header setOpen={setOpen} />
+        {open && (
+          <>
+            <AssesmentDetails data={data} />
+            <MyAssessmentPage data={data} setOpenDialog={setOpenDialog} />
+          </>
+        )}
+      </div>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>
+          Create New Assessment{" "}
+          <CloseIcon
+            style={{float: "right", cursor: "pointer"}}
+            onClick={() => setOpenDialog(false)}
+            variant="outlined"
+            ref={cancelButtonRef}
+          />
+        </DialogTitle>
 
-    return (
-      <>
-        <div className="flex flex-col justify-start items-start overflow-hidden">
-          <Header setOpen={setOpen} />
-          {open && (
-            <>
-              <AssesmentDetails data={data} />
-              <MyAssessmentPage data={data} setOpenDialog={setOpenDialog} />
-            </>
-          )}
-        </div>
-        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-          <DialogTitle>Create New Assessment</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <div className="mt-8">
-                <p className="text-sm text-gray-500">
-                  <form onSubmit={handleSubmit}>
-                    <div className="flex flex-col gap-4 md:gap-8">
-                      <TextField
+        <DialogContent>
+          <DialogContentText>
+            <div className="mt-8">
+              <p className="text-sm text-gray-500">
+                <form onSubmit={handleSubmit}>
+                  <div className="flex flex-col gap-4 md:gap-8">
+                    <TextField
+                      id="standard-basic"
+                      variant="standard"
+                      name="title"
+                      type="text"
+                      label="Name of assesment"
+                      placeholder="Type Here"
+                      value={formData.title}
+                      onChange={(e) => handleChange(e, "title")}
+                      error={formData.title === ""}
+                      helperText={
+                        formData.title === "" ? "Title is required" : ""
+                      }
+                    />
+
+                    <FormControl>
+                      <InputLabel>Purpose of the test is</InputLabel>
+                      <Select
                         id="standard-basic"
                         variant="standard"
-                        name="title"
-                        type="text"
-                        label="Title"
-                        value={formData.title}
-                        onChange={(e) => handleChange(e, "title")}
+                        name="purpose"
+                        value={formData.purpose}
+                        onChange={(e) => handleChange(e, "purpose")}
                         required
-                      />
+                      >
+                        <MenuItem value="Private Job">Private Job</MenuItem>
+                        <MenuItem value="Internship">Internship</MenuItem>
+                        <MenuItem value="Industrial Training">
+                          Industrial Training
+                        </MenuItem>
+                        <MenuItem value="Gvt. Job">Gvt. Job</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem>
+                      </Select>
+                    </FormControl>
 
-                      <FormControl>
-                        <InputLabel>Purpose</InputLabel>
-                        <Select
-                          id="standard-basic"
-                          variant="standard"
-                          name="purpose"
-                          value={formData.purpose}
-                          onChange={(e) => handleChange(e, "purpose")}
-                          required
-                        >
-                          <MenuItem value="Job">Frontend Developer</MenuItem>
-                          <MenuItem value="Intern">Backend Developer</MenuItem>
-                          <MenuItem value="Other">Software Engineer</MenuItem>
-                          <MenuItem value="Other">Product Manager</MenuItem>
-                          <MenuItem value="Other">ReactJs Developer</MenuItem>
-                          <MenuItem value="Other">Other</MenuItem>
-                        </Select>
-                      </FormControl>
+                    <TextField
+                      id="standard-basic"
+                      variant="standard"
+                      name="questions"
+                      label="Question"
+                      type="number"
+                      value={formData.questions}
+                      onChange={(e) => handleChange(e, "questions")}
+                      required
+                    />
 
-                      <TextField
-                        id="standard-basic"
-                        variant="standard"
-                        name="questions"
-                        label="Question"
-                        type="number"
-                        value={formData.questions}
-                        onChange={(e) => handleChange(e, "questions")}
-                        required
-                      />
-
-                      <div className="flex flex-wrap justify-start items-center p-4 border-2 gap-2 rounded-lg">
-                        {skills?.map((item, index) => {
-                          return (
-                            <div
-                              key={index}
-                              className="flex justify-center items-center bg-orange-300 py-1 px-4 gap-4 rounded-xl"
+                    <div className="flex flex-wrap justify-start items-center p-4 border-2 gap-2 rounded-lg">
+                      {skills?.map((item, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="flex justify-center items-center bg-orange-300 py-1 px-4 gap-4 rounded-xl"
+                          >
+                            <span>{item}</span>
+                            <span
+                              onClick={() => removeSkills(item)}
+                              className="text-xl cursor-pointer"
                             >
-                              <span>{item}</span>
-                              <span
-                                onClick={() => removeSkills(item)}
-                                className="text-xl cursor-pointer"
-                              >
-                                ×
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <TextField
-                        id="standard-basic"
-                        variant="standard"
-                        name="skills"
-                        label="Skills (Press 'Shift' to add)"
-                        type="text"
-                        onKeyUp={addSkills}
-                      />
-
-                      <TextField
-                        id="standard-basic"
-                        variant="standard"
-                        name="duration"
-                        label="Duration (HH:MM:SS)"
-                        value={formData.duration}
-                        onChange={(e) => handleChange(e, "duration")}
-                        required
-                      />
-
-                      {/* <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                        <button
-                          type="submit"
-                          className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                        >
-                          Deactivate
-                        </button>
-                        <button
-                          type="button"
-                          className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                          onClick={() => setOpenDialog(false)}
-                          ref={cancelButtonRef}
-                        >
-                          Cancel
-                        </button>
-                      </div> */}
-                    </div>
-                  </form>
-                </p>
-              </div>
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions sx={{diplay: "flrx", justifyContent: "center"}}>
-            <Button
-              onClick={handleSubmit}
-              variant="contained"
-              color="primary"
-              autoFocus
-            >
-              Deactivate
-            </Button>
-            <Button
-              onClick={() => setOpenDialog(false)}
-              variant="outlined"
-              color="primary"
-              ref={cancelButtonRef}
-            >
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
-        {/* <Transition.Root show={openDialog} as={Fragment}>
-          <Dialog
-            as="div"
-            className="relative z-10 "
-            initialFocus={cancelButtonRef}
-            onClose={setOpenDialog}
-          >
-            <div className="fixed inset-0 z-10 overflow-y-auto bg-black/30 bg-opacity-25">
-              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                  enterTo="opacity-100 translate-y-0 sm:scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                  leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-5xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-base font-semibold leading-6 text-gray-900 border-b-2 pb-2"
-                    >
-                      Create New Assessment
-                    </Dialog.Title>
-                    <div className="mt-8">
-                      <p className="text-sm text-gray-500">
-                        <form onSubmit={handleSubmit}>
-                          <div className="flex flex-col gap-4 md:gap-8">
-                            <TextField
-                              name="title"
-                              type="text"
-                              label="Title"
-                              value={formData.title}
-                              onChange={(e) => handleChange(e, "title")}
-                              required
-                            />
-
-                            <FormControl>
-                              <InputLabel>Purpose</InputLabel>
-                              <Select
-                                name="purpose"
-                                value={formData.purpose}
-                                onChange={(e) => handleChange(e, "purpose")}
-                                required
-                              >
-                                <MenuItem value="Job">Job</MenuItem>
-                                <MenuItem value="Intern">Intern</MenuItem>
-                                <MenuItem value="Other">Other</MenuItem>
-                              </Select>
-                            </FormControl>
-
-                            <TextField
-                              name="questions"
-                              label="Question"
-                              type="number"
-                              value={formData.questions}
-                              onChange={(e) => handleChange(e, "questions")}
-                              required
-                            />
-
-                            <div className="flex flex-wrap justify-start items-center p-4 border-2 gap-2 rounded-lg">
-                              {skills?.map((item, index) => {
-                                return (
-                                  <div
-                                    key={index}
-                                    className="flex justify-center items-center bg-orange-300 py-1 px-4 gap-4 rounded-xl"
-                                  >
-                                    <span>{item}</span>
-                                    <span
-                                      onClick={() => removeSkills(item)}
-                                      className="text-xl cursor-pointer"
-                                    >
-                                      ×
-                                    </span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                            <TextField
-                              name="skills"
-                              label="Skills (Press 'Shift' to add)"
-                              type="text"
-                              onKeyUp={addSkills}
-                            />
-
-                            <TextField
-                              name="duration"
-                              label="Duration (HH:MM:SS)"
-                              value={formData.duration}
-                              onChange={(e) => handleChange(e, "duration")}
-                              required
-                            />
-
-                            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                              <button
-                                type="submit"
-                                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                              >
-                                Deactivate
-                              </button>
-                              <button
-                                type="button"
-                                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                                onClick={() => setOpenDialog(false)}
-                                ref={cancelButtonRef}
-                              >
-                                Cancel
-                              </button>
-                            </div>
+                              ×
+                            </span>
                           </div>
-                        </form>
-                      </p>
+                        );
+                      })}
                     </div>
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
+                    <TextField
+                      id="standard-basic"
+                      variant="standard"
+                      name="skills"
+                      placeholder="Type Here"
+                      label="Skills (Press 'Shift' to add)"
+                      type="text"
+                      onKeyUp={addSkills}
+                    />
+
+                    <TextField
+                      id="standard-basic"
+                      variant="standard"
+                      name="duration"
+                      label="Duration of assesment"
+                      placeholder="(HH:MM:SS)"
+                      value={formData.duration}
+                      onChange={(e) => handleChange(e, "duration")}
+                      required
+                    />
+                  </div>
+                </form>
+              </p>
             </div>
-          </Dialog>
-        </Transition.Root> */}
-      </>
-    );
-}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{diplay: "flrx", justifyContent: "center"}}>
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
 
-export default CreateAssesmentDialogBox
-
+export default CreateAssesmentDialogBox;
 
 const data = [
-    {
-        title: 'Math Assessment',
-        purpose: 'Job',
-        questions: 24,
-        duration: "00:04:00",
-        date: '20 Apr 2023'
-    },
-    {
-        title: 'React Assessment',
-        purpose: 'Intern',
-        questions: 50,
-        duration: "00:02:00",
-        date: '11 Sep 2023'
-    },
-]
+  {
+    title: "NodeJs Assessment",
+    purpose: "Job",
+    questions: 24,
+    duration: "00:04:00",
+    date: "20 Apr 2023",
+  },
+  {
+    title: "ReactJs Assessment",
+    purpose: "Intern",
+    questions: 50,
+    duration: "00:02:00",
+    date: "11 Sep 2023",
+  },
+];
