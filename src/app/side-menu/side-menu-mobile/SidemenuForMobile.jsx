@@ -9,12 +9,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import HamburgerIcon from '../../../public/hamburger.png'
+import HamburgerIcon from "../../../app/assets/hamburger.png";
 import Image from 'next/image';
-import Dashboard from '../../../public/dashboard.png'
-import Note from '../../../public/note_alt.png'
-import Quiz from '../../../public/quiz.png'
-import Admin from '../../../public/admin_meds.png'
+import Dashboard from "../../../app/assets/dashboard.png";
+import Note from "../../../app/assets/note_alt.png";
+import Quiz from "../../../app/assets/quiz.png";
+import Admin from "../../../app/assets/admin_meds.png";
 
 
 const  SidemenuForMobile = () => {

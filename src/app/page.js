@@ -2,6 +2,7 @@
 import {useState} from "react"
 import {ToastContainer} from 'react-toastify'
 import SidemenuForDesktop from "./side-menu/side-menu-desktop/SidemenuForDesktop"
+import CreateAssesmentDialogBox from "./components/create-assesment-dialogbox/CreateAssesmentDialog"
 
 export default function Home() {
   const [open, setOpen] = useState(false)
@@ -24,7 +25,7 @@ export default function Home() {
         </div>
 
         <div className='w-screen md:w-11/12 h-screen scroll-smooth overflow-y-auto bg-white p-4 rounded-2xl'>
-          {/* {open && <Assessment />} */}
+          {open && <CreateAssesmentDialogBox/>}
         </div>
       </div>
     </>
