@@ -1,6 +1,5 @@
 import SidemenuForMobile from '@/app/side-menu/side-menu-mobile/SidemenuForMobile';
 import React, { useEffect } from 'react'
-// import SidebarMob from '../sidebar/SidebarMob'
 
 const Header = ({setOpen}) => {
 

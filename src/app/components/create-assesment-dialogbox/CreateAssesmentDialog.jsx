@@ -169,7 +169,7 @@ const CreateAssesmentDialogBox = () => {
                         return (
                           <div
                             key={index}
-                            className="flex justify-center items-center bg-orange-300 py-1 px-4 gap-4 rounded-xl"
+                            className="flex justify-center items-center bg-blue-300 py-1 px-4 gap-4 rounded-xl"
                           >
                             <span>{item}</span>
                             <span

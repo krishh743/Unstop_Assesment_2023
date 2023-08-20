@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import React, { useEffect } from 'react'
-// import TA from '../../../public/ta.png'
 import TA from "../../../app/assets/ta.png";
 import TP from "../../../app/assets/tp.png";
 import C from "../../../app/assets/c.png";

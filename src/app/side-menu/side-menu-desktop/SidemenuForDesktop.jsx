@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import Image from "next/image";
-import Dashboard from "../../assets/dashboard.png";
-import Note from "../../assets/note_alt.png";
-import Quiz from "../../assets/quiz.png";
-import Admin from "../../assets/admin_meds.png";
+import DashboardIcon from "../../assets/dashboard.png";
+import NoteIcon from "../../assets/note_alt.png";
+import QuizIcon from "../../assets/quiz.png";
+import AdminIcon from "../../assets/admin_meds.png";
 
 const SidemenuForDesktop = ({setOpen}) => {
   const [selectedItem, setSelectedItem] = useState("assessment");
@@ -37,7 +37,7 @@ const SidemenuForDesktop = ({setOpen}) => {
           style={{width: "90px", height: "70px", padding: "10px 20px"}}
           onClick={() => notify("Dashboard is under development!")}
         >
-          <Image src={Dashboard} alt="Dashboard" width={20} height={20} />
+          <Image src={DashboardIcon} alt="Dashboard" width={20} height={20} />
           <span>Dashboard</span>
         </div>
         <div
@@ -47,7 +47,7 @@ const SidemenuForDesktop = ({setOpen}) => {
           style={{width: "90px", height: "70px", padding: "10px 20px"}}
           onClick={() => handleItemClick("assessment")}
         >
-          <Image src={Note} alt="Assessment" width={20} height={20} />
+          <Image src={NoteIcon} alt="Assessment" width={20} height={20} />
           <span>Assessment</span>
         </div>
         <div
@@ -55,14 +55,14 @@ const SidemenuForDesktop = ({setOpen}) => {
             "library"
           )}`}
           style={{width: "90px", height: "70px", padding: "10px 20px"}}
-          onClick={() => notify("Library Component is yet to be built!")}
+          onClick={() => notify("Library is under development !")}
         >
-          <Image src={Quiz} alt="My Library" width={20} height={20} />
+          <Image src={QuizIcon} alt="My Library" width={20} height={20} />
           <span>My Library</span>
         </div>
       </div>
       <div
-        onClick={() => notify("Only Admins have Access!!")}
+        onClick={() => notify("Only For Admin Accessbility!")}
         className="flex flex-col justify-center items-center px-2 py-4  border-t-2 border-dotted border-grey space-y-3 cursor-pointer"
       >
         <span
@@ -78,7 +78,7 @@ const SidemenuForDesktop = ({setOpen}) => {
         >
           Admin
         </span>
-        <Image src={Admin} alt="Round" width={20} height={20} />
+        <Image src={AdminIcon} alt="Round" width={20} height={20} />
         <span>Round Status</span>
       </div>
     </>

@@ -11,10 +11,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HamburgerIcon from "../../../app/assets/hamburger.png";
 import Image from 'next/image';
-import Dashboard from "../../../app/assets/dashboard.png";
-import Note from "../../../app/assets/note_alt.png";
-import Quiz from "../../../app/assets/quiz.png";
-import Admin from "../../../app/assets/admin_meds.png";
+import DashboardIcon from "../../../app/assets/dashboard.png";
+import NoteIcon from "../../../app/assets/note_alt.png";
+import QuizIcon from "../../../app/assets/quiz.png";
+import AdminIcon from "../../../app/assets/admin_meds.png";
 
 
 const  SidemenuForMobile = () => {
@@ -46,9 +46,9 @@ const  SidemenuForMobile = () => {
                     <ListItem key={text} onClick={handleTouch} disablePadding sx={{border: text === 'Assessment' ? '1px solid #0073E6' : 'none', backgroundColor: text === 'Assessment' ? '#E5F1FC' : 'white', color: text === 'Assessment' ? '#0073E6' : 'black', borderRadius: '8px'}}>
                         <ListItemButton>
                             <ListItemIcon>
-                                {index === 0 ? <Image src={Dashboard} alt="Dashboard" width={20} height={20} /> :
-                                    index === 1 ? <Image src={Note} alt="Assessment" width={20} height={20} /> :
-                                        <Image src={Quiz} alt="My Library" width={20} height={20} />}
+                                {index === 0 ? <Image src={DashboardIcon} alt="Dashboard" width={20} height={20} /> :
+                                    index === 1 ? <Image src={NoteIcon} alt="Assessment" width={20} height={20} /> :
+                                        <Image src={QuizIcon} alt="My Library" width={20} height={20} />}
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItemButton>
@@ -61,7 +61,7 @@ const  SidemenuForMobile = () => {
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                <Image src={Admin} alt="Round" width={20} height={20} />
+                                <Image src={AdminIcon} alt="Round" width={20} height={20} />
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItemButton>
