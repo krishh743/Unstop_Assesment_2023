@@ -26,9 +26,10 @@ const CreateAssesmentDialogBox = () => {
     "NodeJs",
     "ReactJs",
     "Express",
-    "MongoDb",
+    
   ]);
   const cancelButtonRef = useRef(null);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     purpose: "",
@@ -47,6 +48,15 @@ const CreateAssesmentDialogBox = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+ if (
+   formData.title === "" ||
+   formData.purpose === "" ||
+   formData.questions === "" ||
+   formData.duration === ""
+ ) {
+   setFormSubmitted(true);
+   return;
+ }
     console.log(formData);
     data.unshift(formData);
     setOpenDialog(false);
@@ -54,7 +64,7 @@ const CreateAssesmentDialogBox = () => {
   };
 
   const addSkills = (e) => {
-    if (e.key === "Shift") {
+    if (e.key === "Enter") {
       const newValue = e.target.value;
       setSkills((prevValues) => [...prevValues, newValue]);
       e.target.value = "";
@@ -98,13 +108,16 @@ const CreateAssesmentDialogBox = () => {
                       variant="standard"
                       name="title"
                       type="text"
-                      label="Name of assesment"
+                      label="Name of assessment"
                       placeholder="Type Here"
                       value={formData.title}
                       onChange={(e) => handleChange(e, "title")}
-                      error={formData.title === ""}
+                      required
+                      error={formSubmitted && formData.title === ""}
                       helperText={
-                        formData.title === "" ? "Title is required" : ""
+                        formSubmitted && formData.title === ""
+                          ? "Name of assessment Required !"
+                          : ""
                       }
                     />
 
@@ -117,6 +130,12 @@ const CreateAssesmentDialogBox = () => {
                         value={formData.purpose}
                         onChange={(e) => handleChange(e, "purpose")}
                         required
+                        error={formSubmitted && formData.purpose === ""}
+                        helperText={
+                          formSubmitted && formData.purpose === ""
+                            ? "Purpose of the test is Required !"
+                            : ""
+                        }
                       >
                         <MenuItem value="Private Job">Private Job</MenuItem>
                         <MenuItem value="Internship">Internship</MenuItem>
@@ -137,6 +156,12 @@ const CreateAssesmentDialogBox = () => {
                       value={formData.questions}
                       onChange={(e) => handleChange(e, "questions")}
                       required
+                      error={formSubmitted && formData.questions === ""}
+                      helperText={
+                        formSubmitted && formData.questions === ""
+                          ? "questions field is Required !"
+                          : ""
+                      }
                     />
 
                     <div className="flex flex-wrap justify-start items-center p-4 border-2 gap-2 rounded-lg">
@@ -162,7 +187,7 @@ const CreateAssesmentDialogBox = () => {
                       variant="standard"
                       name="skills"
                       placeholder="Type Here"
-                      label="Skills (Press 'Shift' to add)"
+                      label="Skills (Press 'Enter' to add skills)"
                       type="text"
                       onKeyUp={addSkills}
                     />
@@ -176,6 +201,12 @@ const CreateAssesmentDialogBox = () => {
                       value={formData.duration}
                       onChange={(e) => handleChange(e, "duration")}
                       required
+                      error={formSubmitted && formData.duration === ""}
+                      helperText={
+                        formSubmitted && formData.duration === ""
+                          ? "Duration is Required !"
+                          : ""
+                      }
                     />
                   </div>
                 </form>
