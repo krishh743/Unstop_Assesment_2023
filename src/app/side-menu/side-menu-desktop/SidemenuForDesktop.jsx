@@ -9,7 +9,6 @@ import AdminIcon from "../../assets/admin_meds.png";
 const SidemenuForDesktop = ({setOpen}) => {
   const [selectedItem, setSelectedItem] = useState("assessment");
   const handleItemClick = (item) => {
-    console.log("click");
     setSelectedItem(item);
   };
   const getItemClassName = (item) => {
@@ -18,7 +17,7 @@ const SidemenuForDesktop = ({setOpen}) => {
     }
     return "";
   };
-  const notify = (msg) => toast.error(msg);
+  const notify = (msg) => toast.warning(msg);
   useEffect(() => {
     if (selectedItem === "assessment") {
       setOpen(true);

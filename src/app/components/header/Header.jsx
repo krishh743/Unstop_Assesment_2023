@@ -2,11 +2,9 @@ import SidemenuForMobile from '@/app/side-menu/side-menu-mobile/SidemenuForMobil
 import React, { useEffect } from 'react'
 
 const Header = ({setOpen}) => {
-
   const [selectedItem, setSelectedItem] = React.useState(null);
 
   const handleItemClick = (item) => {
-    // console.log('click')
     setSelectedItem(item);
   };
 
